@@ -121,3 +121,21 @@ Member 1 (Data and Modelling), Member 2 (NLP and Feature Extraction), Member 3 (
 
 ## License
 MIT
+
+## Running the app, comparison and tests
+
+Install dependencies:
+
+    pip install -r requirements.txt
+
+Start the Streamlit app:
+
+    streamlit run app.py
+
+Compare the TF-IDF baseline and DistilBERT on the evaluation set:
+
+    python compare.py
+
+Run the tests:
+
+    python -m pytest tests

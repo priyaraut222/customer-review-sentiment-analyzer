@@ -1,0 +1,13 @@
+id,true,baseline,distilbert,zero_shot,role,few_shot,structured
+1,positive,positive,positive,positive,positive,positive,positive
+2,positive,positive,positive,positive,positive,positive,positive
+3,positive,positive,positive,positive,positive,positive,positive
+4,positive,positive,negative,positive,positive,positive,positive
+13,negative,negative,negative,negative,negative,negative,negative
+14,negative,negative,negative,negative,negative,negative,negative
+15,negative,negative,negative,negative,negative,negative,negative
+16,negative,negative,negative,negative,negative,negative,negative
+25,neutral,neutral,positive,neutral,negative,negative,neutral
+26,neutral,positive,positive,neutral,positive,neutral,neutral
+27,neutral,positive,positive,negative,negative,neutral,neutral
+28,neutral,positive,positive,negative,negative,neutral,neutral

@@ -1,0 +1,48 @@
+{"method": "zero_shot", "id": 1, "raw": "The sentiment of this customer review is positive.\n\nThis review expresses satisfaction with several aspects of the laptop:\n\n1. Battery life"}
+{"method": "zero_shot", "id": 2, "raw": "The sentiment of this customer review is positive. The reviewer expresses strong approval and satisfaction with the product, highlighting several key points"}
+{"method": "zero_shot", "id": 3, "raw": "The sentiment of this customer review is positive. The reviewer highlights several favorable aspects of their experience:\n\n1. Fast delivery:"}
+{"method": "zero_shot", "id": 4, "raw": "The sentiment of this customer review is positive. The reviewer expresses satisfaction with the service provided by the company, highlighting that the"}
+{"method": "zero_shot", "id": 13, "raw": "Based on the content of the customer review provided, the sentiment is clearly **negative**. The reviewer expresses dissatisfaction with several"}
+{"method": "zero_shot", "id": 14, "raw": "The sentiment of this customer review is clearly **negative**. The reviewer expresses dissatisfaction with both the delivery time and the quality"}
+{"method": "zero_shot", "id": 15, "raw": "Based on the content of the customer review provided, the sentiment is clearly negative. The reviewer expresses dissatisfaction with multiple aspects of"}
+{"method": "zero_shot", "id": 16, "raw": "The sentiment of this customer review is clearly **negative**. The reviewer expresses multiple issues with their product, including:\n\n1"}
+{"method": "zero_shot", "id": 25, "raw": "Based on the content and tone of the given customer review, I would classify it as **neutral**.\n\nHere's why"}
+{"method": "zero_shot", "id": 26, "raw": "The sentiment of this customer review is neutral.\n\nWhile the review mentions that \"Sound is decent\" and that \"Delivery was"}
+{"method": "zero_shot", "id": 27, "raw": "The sentiment of this customer review is negative. The reviewer expresses dissatisfaction with the blender's performance in terms of its ability to"}
+{"method": "zero_shot", "id": 28, "raw": "The sentiment of this customer review is negative. The reviewer expresses dissatisfaction with both the camera and the battery, indicating that they"}
+{"method": "role", "id": 1, "raw": "positive"}
+{"method": "role", "id": 2, "raw": "positive"}
+{"method": "role", "id": 3, "raw": "positive"}
+{"method": "role", "id": 4, "raw": "positive"}
+{"method": "role", "id": 13, "raw": "negative"}
+{"method": "role", "id": 14, "raw": "negative"}
+{"method": "role", "id": 15, "raw": "negative"}
+{"method": "role", "id": 16, "raw": "negative"}
+{"method": "role", "id": 25, "raw": "negative"}
+{"method": "role", "id": 26, "raw": "positive"}
+{"method": "role", "id": 27, "raw": "negative"}
+{"method": "role", "id": 28, "raw": "negative"}
+{"method": "few_shot", "id": 1, "raw": "positive"}
+{"method": "few_shot", "id": 2, "raw": "positive"}
+{"method": "few_shot", "id": 3, "raw": "positive"}
+{"method": "few_shot", "id": 4, "raw": "positive"}
+{"method": "few_shot", "id": 13, "raw": "negative"}
+{"method": "few_shot", "id": 14, "raw": "negative"}
+{"method": "few_shot", "id": 15, "raw": "negative"}
+{"method": "few_shot", "id": 16, "raw": "negative"}
+{"method": "few_shot", "id": 25, "raw": "negative"}
+{"method": "few_shot", "id": 26, "raw": "neutral"}
+{"method": "few_shot", "id": 27, "raw": "neutral"}
+{"method": "few_shot", "id": 28, "raw": "neutral"}
+{"method": "structured", "id": 1, "raw": "{ \"overall_sentiment\": \"positive\", \"aspects\": [{\"feature\": \"battery\", \"sentiment\": \"positive\"}], \"summary\": \"The reviewer found the laptop's battery lasted a full workday and the keyboard felt great to type on, while the screen was bright and sharp. Setup time was relatively short.\" }"}
+{"method": "structured", "id": 2, "raw": "{ \"overall_sentiment\": \"positive\", \"aspects\": [{\"feature\": \"sound quality\", \"sentiment\": \"positive\"}], \"summary\": \"Customer loves the earbuds and finds them superior to their price point. They work well with their phone and are easy to pair.\" }"}
+{"method": "structured", "id": 3, "raw": "{ \"overall_sentiment\": \"positive\", \"aspects\": [{\"feature\": \"delivery\", \"sentiment\": \"positive\"}, {\"feature\": \"package\", \"sentiment\": \"positive\"}, {\"feature\": \"blender\", \"sentiment\": \"positive\"}], \"summary\": \"The reviewer found the delivery fast, packaging was good, and the blender worked well despite being quiet.\" }"}
+{"method": "structured", "id": 4, "raw": "{ \"overall_sentiment\": \"positive\", \"aspects\": [{\"feature\": \"customer support\", \"sentiment\": \"positive\"}], \"summary\": \"The customer received a replacement for their cracked case from the previous day, indicating exceptional customer service.\" }"}
+{"method": "structured", "id": 13, "raw": "{ \"overall_sentiment\": \"negative\", \"aspects\": [{\"feature\": \"battery\", \"sentiment\": \"negative\"}, {\"feature\": \"laptop\", \"sentiment\": \"negative\"}, {\"feature\": \"support\", \"sentiment\": \"negative\"}], \"summary\": \"The battery drains quickly and the laptop overheats, and the customer received no help from support.\" }"}
+{"method": "structured", "id": 14, "raw": "{ \"overall_sentiment\": \"negative\", \"aspects\": [{\"feature\": \"delivery\", \"sentiment\": \"negative\"}, {\"feature\": \"box\", \"sentiment\": \"negative\"}, {\"feature\": \"speaker\", \"sentiment\": \"negative\"}, {\"feature\": \"recommendation\", \"sentiment\": \"neutral\"}], \"summary\": \"The delivery time was extended by two weeks but the box arrived crushed and the speaker inside was scratched. The customer would not recommend this store.\" }"}
+{"method": "structured", "id": 15, "raw": "{ \"overall_sentiment\": \"negative\", \"aspects\": [{\"feature\": \"cracked screen\", \"sentiment\": \"negative\"}], \"summary\": \"The customer had a terrible experience due to their screen cracking after a minor drop and receiving a rejection for their warranty claim.\" }"}
+{"method": "structured", "id": 16, "raw": "{ \"overall_sentiment\": \"negative\", \"aspects\": [{\"feature\": \"sound\", \"sentiment\": \"negative\"}, {\"feature\": \"bluetooth\", \"sentiment\": \"negative\"}, {\"feature\": \"ear tips\", \"sentiment\": \"negative\"}], \"summary\": \"The sound quality is poor, the Bluetooth connection fails frequently, and the ear tips are easily detached, resulting in wasted money.\" }"}
+{"method": "structured", "id": 25, "raw": "{ \"overall_sentiment\": \"neutral\", \"aspects\": [{\"feature\": \"screen\", \"sentiment\": \"positive\"}, {\"feature\": \"battery\", \"sentiment\": \"neutral\"}, {\"feature\": \"price\", \"sentiment\": \"neutral\"}, {\"feature\": \"support\", \"sentiment\": \"neutral\"}], \"summary\": \"The reviewer finds the screen nice but the battery doesn't last long enough to be considered good value for money.\" }"}
+{"method": "structured", "id": 26, "raw": "{ \"overall_sentiment\": \"neutral\", \"aspects\": [{\"feature\": \"sound\", \"sentiment\": \"decent\"}, {\"feature\": \"delivery\", \"sentiment\": \"on time\"}], \"summary\": \"The sound quality is good and delivery was timely.\" }"}
+{"method": "structured", "id": 27, "raw": "{ \"overall_sentiment\": \"neutral\", \"aspects\": [{\"feature\": \"blender\", \"sentiment\": \"average\"}, {\"feature\": \"smoothies\", \"sentiment\": \"works fine\"}, {\"feature\": \"ice\", \"sentiment\": \"struggles\"}, {\"feature\": \"loudness\", \"sentiment\": \"bit\"}] }, \"summary\": \"The blender is considered average but has issues with smoothies and ice quality, and it's noisy.\" }"}
+{"method": "structured", "id": 28, "raw": "{ \"overall_sentiment\": \"neutral\", \"aspects\": [{\"feature\": \"camera\", \"sentiment\": \"positive\"}, {\"feature\": \"battery\", \"sentiment\": \"negative\"}], \"summary\": \"The reviewer liked the camera but found it lacking in battery performance.\" }"}

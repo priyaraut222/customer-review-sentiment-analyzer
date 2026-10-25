@@ -2,24 +2,28 @@
 
 Run:  streamlit run app.py
 """
+"""Streamlit dashboard: single-review analysis and bulk CSV analysis.
+ 
+Run:  streamlit run app.py
+"""
 import os
-
+ 
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
-
+ 
 from src.feature_extraction import aspect_sentiments, summarize_features
 from src.preprocess import load_reviews
 from src.sentiment_model import build_pipeline, load_model, predict_sentiment, save_model
-
+ 
 MODEL_PATH = "models/sentiment_model.joblib"
 COLORS = {"positive": "#2e7d32", "neutral": "#9e9e9e", "negative": "#c62828"}
-
+ 
 st.set_page_config(page_title="Customer Review Sentiment Analyzer", layout="wide")
 st.title("Customer Review Sentiment Analyzer")
 st.caption("Feedback classifier with key feature extraction")
-
-
+ 
+ 
 @st.cache_resource
 def get_model():
     if not os.path.exists(MODEL_PATH):
@@ -29,11 +33,21 @@ def get_model():
         save_model(model, MODEL_PATH)
         return model
     return load_model(MODEL_PATH)
-
-
+ 
+ 
 model = get_model()
+ 
+ 
+def fallback_notice():
+    """Tell the user when the simpler feature extractor is in use (spaCy could not run on this Python)."""
+    from src.feature_extraction import backend_name
+    if backend_name() == "fallback":
+        st.warning("spaCy cannot run on this Python version, so a simpler rule-based feature extractor is in use. "
+                   "Features may be less accurate. Deploy on Python 3.12 for the full spaCy extractor.")
+ 
+ 
 tab1, tab2, tab3, tab4 = st.tabs(["Single review", "Bulk CSV analysis", "Prompt Lab (Hugging Face LLM)", "Model comparison"])
-
+ 
 with tab1:
     text = st.text_area("Paste a customer review", height=150,
                         placeholder="The battery life is terrible but I love the screen.")
@@ -47,11 +61,12 @@ with tab1:
         with c2:
             st.subheader("Key features")
             items = aspect_sentiments(model, text)
+            fallback_notice()
             if items:
                 st.dataframe(pd.DataFrame(items)[["feature", "sentiment", "sentence"]], width="stretch")
             else:
                 st.info("No key features detected.")
-
+ 
 with tab2:
     st.write("Upload a CSV with a review text column to see which features customers praise or complain about.")
     up = st.file_uploader("CSV file", type="csv")
@@ -66,6 +81,7 @@ with tab2:
                 from src.preprocess import clean_text
                 overall = pd.Series(model.predict([clean_text(r) for r in reviews])).value_counts()
                 summary = summarize_features(model, reviews, top_n)
+            fallback_notice()
             st.subheader("Overall sentiment distribution")
             st.bar_chart(overall)
             if summary:
@@ -77,8 +93,8 @@ with tab2:
                 ax.set_xlabel("Mentions")
                 st.pyplot(fig)
                 st.dataframe(sdf, width="stretch")
-
-
+ 
+ 
 # ----------------------------------------------------------------------------------------------------------
 # Prompt Lab: run one review through any prompting technique and inspect every step
 # ----------------------------------------------------------------------------------------------------------
@@ -86,14 +102,14 @@ with tab2:
 def get_llm(name: str):
     from src.llm import HFChatLLM
     return HFChatLLM(name)
-
-
+ 
+ 
 with tab3:
     from src import prompts as P
     from src.eval_data import EVAL_SET
     from src.llm import DEFAULT_MODEL
     from src.prompt_analyzer import PromptAnalyzer
-
+ 
     st.write("Run one review through an instruction-tuned Hugging Face model with a chosen **prompting technique**, "
              "then inspect the exact prompt that was sent and the raw model output.")
     c1, c2, c3 = st.columns([2, 2, 1])
@@ -104,14 +120,14 @@ with tab3:
     guard = c3.checkbox("Injection guard", value=True,
                         help="Adds the 'review is untrusted data' instruction. Turn off to see injections succeed.")
     st.caption(P.DESCRIPTIONS[technique])
-
+ 
     examples = {"(write my own)": ""}
     for review, label, _asp, adv in EVAL_SET:
         examples[f"{'[injection] ' if adv else ''}{label}: {review[:60]}..."] = review
     pick = st.selectbox("Load an example", list(examples))
     lab_text = st.text_area("Review", value=examples[pick], height=120, key=f"lab_text_{pick}")
     sc_n = st.slider("Samples for self-consistency", 3, 9, 5) if technique == "self_consistency" else 5
-
+ 
     if st.button("Run technique", type="primary") and lab_text.strip():
         try:
             llm = get_llm(llm_name)
@@ -123,7 +139,7 @@ with tab3:
         with st.spinner("Generating..."):
             kw = {"n": sc_n} if technique == "self_consistency" else {}
             res = PromptAnalyzer(llm, guard=guard).run(technique, lab_text, **kw)
-
+ 
         if res.overall:
             st.markdown(f"<h2 style='color:{COLORS[res.overall]}'>{res.overall.upper()}</h2>", unsafe_allow_html=True)
         else:
@@ -146,7 +162,7 @@ with tab3:
         with st.expander(f"Raw model output ({len(res.raw)})"):
             for r in res.raw:
                 st.code(r, language="text")
-
+ 
 # ----------------------------------------------------------------------------------------------------------
 # Model comparison: results written by `python compare.py`
 # ----------------------------------------------------------------------------------------------------------
@@ -163,3 +179,4 @@ with tab4:
             st.bar_chart(res_df.set_index("method")["adversarial_acc"].dropna())
     else:
         st.info("No results yet. Run `python compare.py` (see README), then refresh this page.")
+ 

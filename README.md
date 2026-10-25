@@ -9,8 +9,6 @@ The project answers one question from a **prompt-engineering** point of view:
 > How much do prompting techniques on a Hugging Face LLM improve sentiment + feature extraction,
 > compared with a classical TF-IDF baseline and a fine-tuned DistilBERT?
 
-Shah & Anchor Kutchhi Engineering College, UG Program in Electronics and Communication (Advanced Communication Technology)
-
 ## Three ways to solve the same task
 
 | Approach | Where | Training needed | Gives features? |

@@ -8,6 +8,11 @@ The project answers one question from a **prompt-engineering** point of view:
 
 > How much do prompting techniques on a Hugging Face LLM improve sentiment + feature extraction,
 > compared with a classical TF-IDF baseline and a fine-tuned DistilBERT?
+> Try the Customer Review Sentiment Analyzer here:
+
+Open the Live App : https://customer-review-sentiment-analyzer-hyauvwvapzeqwwggukh9es.streamlit.app/
+
+Explore the application to analyze customer reviews and predict sentiment.
 
 ## Three ways to solve the same task
 

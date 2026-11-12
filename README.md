@@ -1,38 +1,118 @@
 # Customer Review Sentiment Analyzer
-### Feedback Classification & Aspect-Based Feature Extraction
+### NLP | Fine-Tuned Transformers | Prompt Engineering | Aspect-Based Sentiment Analysis
 
-An intelligent NLP application that analyzes customer reviews, classifies sentiment, extracts key product and service aspects, and compares traditional machine learning, transformer-based models, and LLM prompting strategies.
+An end-to-end NLP application that combines classical machine learning, transformer fine-tuning, and LLM-based prompt engineering to analyse customer feedback, classify sentiment, and extract feature-level opinions.
 
 ## Overview
 
-The **Customer Review Sentiment Analyzer** is a Python-based application designed to automate the analysis of customer feedback.
+Customer reviews often contain opinions about multiple product features within a single piece of feedback. Understanding not just *how customers feel*, but *what they feel about*, is essential for meaningful sentiment analysis.
 
-It classifies reviews into three sentiment categories — **Positive, Neutral, and Negative** — while identifying key aspects associated with customer opinions.
+This project explores three approaches to solving this problem:
 
-The project combines classical machine learning, fine-tuned transformer models, and prompt engineering techniques within an interactive Streamlit interface.
+- **Classical Machine Learning:** TF-IDF with Logistic Regression and spaCy-based feature extraction.
+- **Transformer-Based Learning:** Fine-tuning DistilBERT for sentiment classification.
+- **LLM-Based Analysis:** Experimenting with Hugging Face instruction-tuned models through different prompt engineering strategies.
+
+The central objective is to investigate how prompting techniques influence classification performance, feature extraction, output consistency, and adversarial robustness compared with conventional ML and fine-tuned transformer approaches.
 
 ## Key Features
 
-- **Sentiment Classification:** Classifies customer reviews into positive, neutral, and negative categories.
-- **Aspect & Feature Extraction:** Extracts important product/service aspects using spaCy noun chunks and associates them with sentence-level sentiment.
-- **Multiple ML Approaches:** Implements TF-IDF with Logistic Regression and a fine-tuned DistilBERT classifier.
-- **Prompt Engineering Lab:** Experiments with zero-shot, role-based, few-shot, structured prompting, self-consistency, and prompt chaining.
-- **Single Review Analysis:** Analyzes individual customer reviews and displays predictions.
-- **Bulk CSV Analysis:** Processes uploaded datasets containing multiple customer reviews.
-- **Model Comparison:** Evaluates different approaches using accuracy, macro-F1, weighted-F1, and aspect-level metrics.
-- **Structured Output:** Uses JSON parsing and validation with an automated repair attempt for malformed responses.
-- **Prompt Injection Guard:** Includes configurable guard instructions for supported prompting techniques.
-- **Visual Analytics:** Displays sentiment distributions, evaluation metrics, and comparison results.
+- **Sentiment Classification:** Identifies positive, negative, and neutral customer opinions.
+- **Aspect-Based Sentiment Analysis:** Extracts product and service features and determines the sentiment associated with individual aspects.
+- **DistilBERT Fine-Tuning:** Implements transformer-based sentiment classification using Hugging Face Transformers.
+- **Prompt Engineering Lab:** Implements and compares multiple prompting strategies, including zero-shot, role-based, few-shot, Chain-of-Thought, self-consistency, structured prompting, and prompt chaining.
+- **Adversarial Evaluation:** Tests model behaviour against prompt-injection attempts and compares guarded and unguarded prompting.
+- **Structured LLM Outputs:** Implements JSON validation, response parsing, and automated repair for malformed outputs.
+- **Interactive Streamlit Interface:** Supports individual reviews, bulk CSV analysis, prompt experimentation, and model comparison.
+- **Comprehensive Evaluation:** Measures accuracy, macro-F1, aspect-level metrics, adversarial accuracy, output validity, and inference latency.
 
-## System Architecture
+## Approaches & Prompting Strategies
 
-The application follows a modular architecture:
+| Approach | Implementation |
+|---|---|
+| Classical ML | TF-IDF + Logistic Regression |
+| Transformer | Fine-tuned DistilBERT |
+| Zero-shot | Direct instruction-based classification |
+| Role-based | Persona-driven prompting with guard instructions |
+| Few-shot | Classification using illustrative examples |
+| Few-shot (No Guard) | Ablation experiment without injection-guard instructions |
+| Chain-of-Thought | Step-by-step reasoning for sentiment analysis |
+| Self-Consistency | Multiple generations with majority voting |
+| Structured | JSON schema, validation and repair loop |
+| Prompt Chaining | Sequential feature extraction, sentiment assessment and summarisation |
 
-1. **Input Layer:** Accepts individual reviews or CSV datasets through Streamlit.
-2. **Preprocessing:** Cleans review text, handles missing values, and maps ratings to sentiment labels.
-3. **Model Layer:** Routes inputs through the selected ML classifier or LLM-based workflow.
-4. **Feature Extraction:** Identifies relevant aspects and associates them with sentiment.
-5. **Evaluation & Visualization:** Generates predictions, calculates performance metrics, and displays comparison results.
+All prompt templates are maintained separately, making experimentation and modification straightforward.
+
+## Experimental Results
+
+All approaches were evaluated on a hand-labelled dataset of **40 customer reviews**, including four adversarial examples.
+
+| Method | Accuracy | Macro-F1 |
+|---|---:|---:|
+| TF-IDF + Logistic Regression | 70.0% | 0.689 |
+| DistilBERT | 57.5% | 0.469 |
+| Zero-shot | 87.5% | 0.908 |
+| Few-shot | 92.5% | 0.921 |
+| Few-shot (No Guard) | **95.0%** | **0.948** |
+| Chain-of-Thought | 87.5% | 0.864 |
+| Self-Consistency | 87.5% | 0.864 |
+| Structured | 80.0% | 0.766 |
+| Prompt Chaining | 92.5% | 0.924 |
+
+**Key observations:**
+- Few-shot prompting without guard instructions achieved the highest classification accuracy and macro-F1 on this evaluation set.
+- Few-shot prompting with guard instructions achieved 92.5% accuracy and 100% adversarial accuracy.
+- Zero-shot prompting achieved 100% adversarial accuracy with 87.5% overall accuracy.
+- Structured prompting and prompt chaining additionally support aspect-level extraction and sentiment evaluation.
+- Self-consistency introduced considerably higher inference latency.
+
+*Results are preliminary and based on a small, manually labelled evaluation set. They should not be interpreted as generalisable performance benchmarks.*
+
+## Evaluation Metrics
+
+The comparison framework measures:
+
+- **Accuracy & Macro-F1:** Overall sentiment classification performance.
+- **Adversarial Accuracy:** Classification accuracy on prompt-injection examples.
+- **Valid Rate:** Proportion of outputs following the requested format.
+- **Aspect F1:** Performance of feature extraction.
+- **Aspect Sentiment Accuracy:** Correctness of sentiment assigned to extracted features.
+- **Inference Latency:** Average processing time per review.
+
+Per-review predictions and raw LLM outputs are saved for error analysis and further prompt experimentation.
+
+## Project Structure
+
+```text
+customer-review-sentiment-analyzer/
+│
+├── app.py                       # Streamlit application and interactive dashboard
+├── train.py                     # TF-IDF + Logistic Regression baseline training
+├── train_distilbert.py          # DistilBERT fine-tuning and evaluation
+├── compare.py                   # Comparison of ML, transformer and prompting approaches
+│
+├── data/
+│   ├── sample_reviews.csv        # Synthetic sample training data
+│   └── eval_reviews.csv          # 40 hand-labelled evaluation reviews
+│
+├── src/
+│   ├── prompts.py                # Prompt templates and output parsers
+│   ├── prompt_analyzer.py        # Prompt execution, voting, chaining and JSON repair
+│   ├── llm.py                    # Hugging Face LLM integration and MockLLM
+│   ├── transformer_models.py     # DistilBERT fine-tuning and inference
+│   ├── sentiment_model.py        # Classical sentiment classification
+│   ├── feature_extraction.py     # Aspect and feature extraction
+│   ├── preprocess.py             # Text preprocessing and rating conversion
+│   ├── eval_data.py              # Hand-labelled evaluation dataset
+│   └── generate_sample_data.py   # Synthetic sample data generation
+│
+├── tests/                        # Offline automated test suite
+├── models/                       # Saved trained models
+├── results/                      # Evaluation metrics, predictions and raw outputs
+│
+├── requirements.txt              # Project dependencies
+└── README.md                     # Project documentation
+```
 
 ## Technology Stack
 
@@ -40,57 +120,13 @@ The application follows a modular architecture:
 |---|---|
 | Language | Python |
 | Data Processing | Pandas, NumPy |
-| Machine Learning | Scikit-learn |
+| Classical ML | Scikit-learn |
 | NLP | spaCy |
 | Deep Learning | PyTorch, Hugging Face Transformers |
-| Models | Logistic Regression, DistilBERT, Qwen2.5 Instruct |
+| LLMs | Qwen2.5 Instruct |
 | Prompt Engineering | Zero-shot, Few-shot, CoT, Self-Consistency, Prompt Chaining |
 | Interface | Streamlit |
-| Visualization | Matplotlib |
 | Testing | Pytest |
-
-## Model Evaluation
-
-The project evaluates multiple approaches using real-world Amazon customer review data and a separate hand-labelled evaluation set.
-
-| Approach | Accuracy | Macro-F1 |
-|---|---:|---:|
-| TF-IDF + Logistic Regression | 89.1% | 70.2% |
-| Fine-tuned DistilBERT | 91.7% | 61.2% |
-| Zero-shot Prompting | 83.3% | 82.2% |
-| Few-shot Prompting | 91.7% | 91.5% |
-| Structured Prompting | 100% | 100% |
-
-*Note: Prompt comparison results are based on a completed 12-review evaluation using Qwen2.5-0.5B-Instruct. These preliminary results should not be interpreted as generalizable model performance.*
-
-## Project Structure
-
-```text
-customer-review-sentiment-analyzer/
-│
-├── app.py
-├── train.py
-├── train_distilbert.py
-├── compare.py
-│
-├── src/
-│   ├── preprocess.py
-│   ├── sentiment_model.py
-│   ├── transformer_models.py
-│   ├── feature_extraction.py
-│   ├── llm.py
-│   ├── prompts.py
-│   ├── prompt_analyzer.py
-│   └── eval_data.py
-│
-├── tests/
-├── data/
-├── models/
-├── results/
-│
-├── requirements.txt
-└── README.md
-```
 
 ## Getting Started
 
@@ -98,7 +134,6 @@ customer-review-sentiment-analyzer/
 
 ```bash
 git clone https://github.com/priyaraut222/customer-review-sentiment-analyzer.git
-
 cd customer-review-sentiment-analyzer
 ```
 
@@ -108,61 +143,52 @@ cd customer-review-sentiment-analyzer
 python -m venv .venv
 ```
 
-Activate it:
-
-**Windows:**
-```bash
-.venv\Scripts\activate
-```
-
-**Linux / macOS:**
-```bash
-source .venv/bin/activate
-```
-
-### 3. Install Dependencies
+Activate the environment and install dependencies:
 
 ```bash
 pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 ```
 
-### 4. Run the Application
+### 3. Run the Application
 
 ```bash
 streamlit run app.py
 ```
 
-The application will be accessible locally at:
+### 4. Run Experiments
 
-`http://localhost:8501`
-
-### 5. Train the Models (Optional)
-
-Train the classical ML baseline:
+Train the classical baseline:
 
 ```bash
-python train.py
+python train.py --data path/to/reviews.csv --text-col Text --rating-col Score
 ```
 
 Fine-tune DistilBERT:
 
 ```bash
-python train_distilbert.py --data data/Amazon_Reviews.csv --text-col "Review Text" --rating-col "Rating" --max-samples 2000 --epochs 2 --batch-size 8
+python train_distilbert.py --data path/to/reviews.csv --text-col Text --rating-col Score
 ```
 
-## Dataset & Evaluation
+Compare different approaches:
 
-The classical baseline was evaluated using **21,055 usable Amazon customer reviews**.
+```bash
+python compare.py
+```
 
-The DistilBERT model was fine-tuned on a 2,000-review subset, consisting of 1,600 training samples and 400 held-out samples.
+Run the test suite:
 
-The project also includes a hand-labelled evaluation set of 40 reviews, including adversarial examples, for prompt-based experimentation.
+```bash
+python -m pytest tests -q
+```
 
-## Limitations & Future Improvements
+*The first LLM run requires internet access to download the Hugging Face model weights. An appropriate model and sufficient system memory are required.*
 
-- Improve neutral sentiment classification through better class balancing and additional labelled data.
-- Expand evaluation across the complete 40-review dataset.
-- Improve aspect extraction to handle synonyms, plural forms, and multiple opinions within a sentence.
-- Optimize LLM inference latency and structured-output consistency.
-- Extend deployment and testing for production-scale usage.
+## Limitations & Future Scope
 
+- Expand evaluation using larger, independently labelled datasets such as Amazon or Yelp reviews.
+- Improve neutral sentiment classification and class balance.
+- Enhance aspect matching to support synonyms, plural forms, and complex mixed opinions.
+- Investigate prompt-injection robustness across more diverse adversarial inputs.
+- Explore larger instruction-tuned models and optimise inference latency.
+- Improve reproducibility through expanded benchmarking and model-version tracking.
